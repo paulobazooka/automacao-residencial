@@ -1,0 +1,9 @@
+{
+    "boot": 0,
+    "nome": "Automação Residencial",
+    "projeto": "Automação Residencial",
+    "modelo": "NodeMCU",
+    "firmware": "0.0.1",
+    "interface": "0.0.1",
+    "placa": "ESP8266"
+}

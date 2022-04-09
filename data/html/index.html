@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon" />
+    <link href="../style/index.css" rel="stylesheet">
+    <title>HOME</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h2 class="title">AUTOMAÇÃO RESIDENCIAL</h2>
+            <h3 class="title">
+                <span><img src="../image/termometro.png">&nbsp;<span id="temperatura"></span></span>&nbsp;&nbsp;&nbsp;
+                <span><img src="../image/gota.png">&nbsp;<span id="umidade"></span></span>
+            </h3>
+        </header>
+        <main class="scroll">
+            <div>
+                <form action="/wifi" method="post">
+                    <div class="input-fields">
+                        <label for="ssid">Rede</label>
+                        <input type="text" placeholder="Digite o nome da rede..." id="ssid" name="ssid" required>
+                    </div>
+                    <div class="input-fields">
+                        <label for="ssid">Senha</label>
+                        <input type="text" placeholder="Digite a senha do roteador..." id="pass" name="pass" required>
+                    </div>
+                    <div class="input-fields">
+                        <input type="submit" value="enviar" class="botao">
+                    </div>
+                    <div class="input-fields">
+                        <a href="/botoes" class="botao"> Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <aside></aside>
+        <footer>
+            <!-- <h5>modelo: <strong>%modelo%</strong></h5>
+            <h5>versão firmware: <strong>%versao_firmware%</strong></h5>
+            <h5>versão interface: <strong>%versao_interface%</strong></h5>
+            <h6><strong>Bianquezi Automação</strong></h6> -->
+        </footer>
+    </div>
+    <script>
+        
+        function obterLeitura() {
+
+            setInterval(async () => {
+
+                var url = "http://%IP%/sensores";
+
+                const options = {
+                    method: 'GET',
+                    mode: 'no-cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'text/plain'
+                    }
+                };
+
+                await fetch(url, options)
+                    .then(response => response.body)
+                    .then(body => body.getReader())
+                    .then(reader => reader.read())
+                    .then(res => {
+                        var medicoes = JSON.parse(new TextDecoder("utf-8").decode(res.value));
+                        temperatura.innerHTML = medicoes.temperatura + "ºC";
+                        umidade.innerHTML = medicoes.umidade;
+                    })
+                    .catch(() => {
+                        temperatura.innerHTML = "--ºC";
+                        umidade.innerHTML = "--";
+                        console.log('erro ao obter leitura');
+                    });
+
+            }, 5000);
+        }
+
+        window.onload = function () {
+
+            let umidade = document.getElementById("umidade");
+            let temperatura = document.getElementById("temperatura");
+
+            obterLeitura();
+        }
+    </script>
+</body>
+
+</html>

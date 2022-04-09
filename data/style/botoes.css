@@ -1,0 +1,149 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #B2D8D8;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+.container {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 11vh 79vh 5vh 5vh;
+    grid-template-areas: "header"
+                         "main"
+                         "aside"
+                         "footer";
+}
+  
+header {
+    grid-area: header;
+    background: #004C4C; 
+}
+  
+  
+main {
+    grid-area: main;
+    text-align: center;
+    /* background: blue; */
+}
+
+aside {
+    grid-area: aside;
+    /* background: green; */
+}
+
+footer {
+    grid-area: footer;
+    /* background: red; */
+}
+
+#erro {
+    background: orange;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #FFF;
+    border: solid 1px #FFF;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.rele {
+    display:inline-block;
+    font-weight: bold;
+    font-size: 3em;
+    background: #004C4C;
+    border: #FFF;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 15px;
+    color: #FFF;
+    padding-block: 10px;
+    padding-inline: 20px;
+    margin-inline: 10px;
+    margin-block: 50px;
+    text-transform: uppercase;
+}
+
+#configuracao {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+#configuracao:hover{
+    cursor: pointer;
+    border: #FFF;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 30px;
+    padding: 3px;
+}
+
+.title {
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+}
+
+.rodape {
+    margin-left: 10px;
+    color: orange;
+    text-align: center;
+}
+ 
+@media screen and (max-width: 600px) {
+
+    .container {       
+        grid-template-columns: 1fr;
+        grid-template-rows: 12vh 76vh 0vh 12vh;
+        grid-template-areas: "header"
+                             "main"
+                             "aside"
+                             "footer";
+    }
+
+    .title {
+        font-size: medium;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+    }
+
+    main {
+        overflow-y: scroll;
+    }
+
+    aside {
+        overflow-y: hidden;
+    }
+
+    .rele {
+        font-size: 2em;
+        border-width: 2px;
+        border-radius: 10px;
+        width: 100%;
+        padding-block: 10px;
+        padding-inline: 50px;
+        margin-inline: 2px;
+        margin-block: 10px;
+    }
+
+    #configuracao {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 45px;
+        height: 45px;
+    }
+
+    #configuracao:hover{
+        border: none;
+    }
+} 

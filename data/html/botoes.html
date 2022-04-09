@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon" />
+    <link href="../style/botoes.css" rel="stylesheet">
+    <title>HOME</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h2 class="title">AUTOMAÇÃO RESIDENCIAL</h2>
+            <h3 class="title">
+                <span><img src="../image/termometro.png">&nbsp;<span id="temperatura"></span></span>&nbsp;&nbsp;&nbsp;
+                <span><img src="../image/gota.png">&nbsp;<span id="umidade"></span></span>
+                <img id="configuracao" src="../image/configuracao.png" alt="">
+            </h3>
+        </header>
+        <main class="scroll">
+            <p id="erro" hidden>Erro ao comunicar com o servidor!</p>
+            <button class="rele" id="rele1">%RELE1%</button>
+            <button class="rele" id="rele2">%RELE2%</button>
+            <button class="rele" id="rele3">%RELE3%</button>
+            <button class="rele" id="rele4">%RELE4%</button>
+            <button class="rele" id="rele5">%RELE5%</button>
+            <button class="rele" id="rele6">%RELE6%</button>
+            <button class="rele" id="rele7">%RELE7%</button>
+            <button class="rele" id="rele8">%RELE8%</button>
+        </main>
+        <footer>
+            <div class="rodape">modelo: %modelo%</div>
+            <div class="rodape">versão firmware: %versao_firmware%</div>
+            <div class="rodape">versão interface: %versao_interface%</div>
+            <div class="rodape">Bianquezi Automação</div>
+        </footer>
+    </div>
+    <script>
+        function clickBotao(id) {
+    var url = "http://%IP%/rele/?id=" + id;
+   
+    const options = {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Accept': 'text/plain',
+            'Content-Type': 'text/plain'
+        },
+        body: { "rele": id },
+    };
+
+    fetch(url, options)
+        .then(() => {
+            if (erro.hasAttribute('hidden'))
+                erro.setAttr('hidden');
+        })
+        .catch(() => {
+            if (!erro.hasAttribute('hidden')) {
+                erro.innerHTML = "Erro ao comunicar com o servidor!";
+                erro.removeAttr('hidden');
+            }
+        });
+}
+
+function obterLeitura() {
+
+    setInterval(async () => {
+
+        var url = "http://%IP%/sensores";
+
+        const options = {
+            method: 'GET',
+            mode: 'no-cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'text/plain'
+            }
+        };
+
+        await fetch(url, options)
+            .then(response => response.body)
+            .then(body => body.getReader())
+            .then(reader => reader.read())
+            .then(res => {
+                var medicoes = JSON.parse(new TextDecoder("utf-8").decode(res.value));
+                temperatura.innerHTML = medicoes.temperatura + "ºC";
+                umidade.innerHTML = medicoes.umidade;
+            })
+            .catch(() => {
+                temperatura.innerHTML = "--ºC";
+                umidade.innerHTML = "--";
+                console.log('erro ao obter leitura');
+            });
+
+    }, 5000);
+}
+
+window.onload = function () {
+    let erro = document.getElementById("erro");
+    let umidade = document.getElementById("umidade");
+    let temperatura = document.getElementById("temperatura");
+    let configuracao = document.getElementById('configuracao');
+
+    let rele1 = document.getElementById('rele1');
+    let rele2 = document.getElementById('rele2');
+    let rele3 = document.getElementById('rele3');
+    let rele4 = document.getElementById('rele4');
+    let rele5 = document.getElementById('rele5');
+    let rele6 = document.getElementById('rele6');
+    let rele7 = document.getElementById('rele7');
+    let rele8 = document.getElementById('rele8');
+
+    rele1.onclick = () => clickBotao(1);
+    rele2.onclick = () => clickBotao(2);
+    rele3.onclick = () => clickBotao(3);
+    rele4.onclick = () => clickBotao(4);
+    rele5.onclick = () => clickBotao(5);
+    rele6.onclick = () => clickBotao(6);
+    rele7.onclick = () => clickBotao(7);
+    rele8.onclick = () => clickBotao(8);
+
+    erro.setAttribute('hidden', "true");
+    configuracao.onclick = () => window.location.href = "http://%IP%";
+
+    obterLeitura();
+}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #B2D8D8;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 13vh 77vh 5vh 5vh;
+  grid-template-areas: "header"
+                       "main"
+                       "aside"
+                       "footer";
+}
+
+header {
+  grid-area: header;
+  background: #004C4C; 
+}
+
+
+main {
+  grid-area: main;
+  text-align: center;
+  /* background: blue; */
+}
+
+aside {
+  grid-area: aside;
+  /* background: green; */
+}
+
+footer {
+  grid-area: footer;
+  /* background: red; */
+}
+
+.input-fields {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+label {
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #004C4C;
+}
+
+input {
+  border: #004C4C;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding-block: 10px;
+  padding-inline: 20px;
+  font-weight: bold;
+  font-size: 1.3em;
+  background: #FFF;
+}
+
+.botao {
+  font-weight: bold;
+  font-size: 1.1em;
+  background: #004C4C;
+  border: #FFF;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  color: #FFF;
+  padding-block: 17px;
+  padding-inline: 100%;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: auto;
+}
+
+.title {
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+}
+
+.rodape {
+  margin-left: 10px;
+  color: orange;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .container {       
+    grid-template-columns: 1fr;
+    grid-template-rows: 12vh 76vh 0vh 12vh;
+    grid-template-areas: "header"
+                         "main"
+                         "aside"
+                         "footer";
+  }
+
+  .title {
+      font-size: medium;
+      text-transform: uppercase;
+      text-align: center;
+      color: #fff;
+  }
+
+  main {
+      overflow-y: scroll;
+  }
+
+  aside {
+      overflow-y: hidden;
+  }
+
+  .botao {
+    font-size: 1.5em;
+    border-width: 2px;
+    border-radius: 5px;
+    width: 100%;
+    padding-block: 10px;
+    padding-inline: 30px;
+    margin-inline: 10px;
+    margin-block: 10px;
+  }
+
+}
